@@ -84,7 +84,7 @@ namespace SpotifyPlaylistManagerWorker
 
         private async Task AddSongToPlaylist(Playlist playlist, string song, bool checkExistence = true)
         {
-            if (playlist == null || song == null)
+            if (playlist == null || string.IsNullOrWhiteSpace(song) || song == "+")
                 return;
 
             if (checkExistence && _trackRepository.Exists(playlist, song))
@@ -94,7 +94,7 @@ namespace SpotifyPlaylistManagerWorker
 
             if (track == null)
             {
-                _logger.LogWarning("{SearchedSong} : [SpotifyFileNotFound!]", song);
+                _logger.LogWarning("{SearchedSong} : SpotifyFileNotFound!", song);
 
                 track = new Track {Song = song, Playlist = playlist};
                 _trackRepository.Register(track); // To avoid searching for the track again and again

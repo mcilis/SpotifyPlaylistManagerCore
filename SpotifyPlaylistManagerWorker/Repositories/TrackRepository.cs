@@ -16,28 +16,28 @@ namespace SpotifyPlaylistManagerWorker.Repositories
 
         public bool Exists(Playlist playlist, string song)
         {
-            if (playlist == null || string.IsNullOrWhiteSpace(song))
-                return false;
+            if (playlist == null || string.IsNullOrWhiteSpace(song) || song == "+")
+                return true;
 
             using var db = new LiteDatabase(_db);
 
             var collection = db.GetCollection<Track>("Track");
 
-            var exists = collection.Exists(x => x.Playlist == playlist && x.Song == song);
+            var exists = collection.Exists(x => x.Playlist.Id == playlist.Id && x.Song == song);
 
             return exists;
         }
 
         public Track Retrieve(Playlist playlist, string song)
         {
-            if (playlist == null || string.IsNullOrWhiteSpace(song))
+            if (playlist == null || string.IsNullOrWhiteSpace(song) || song == "+")
                 return null;
 
             using var db = new LiteDatabase(_db);
 
             var collection = db.GetCollection<Track>("Track");
 
-            var track = collection.Find(x => x.Playlist == playlist && x.Song == song).FirstOrDefault();
+            var track = collection.Find(x => x.Playlist.Id == playlist.Id && x.Song == song).FirstOrDefault();
 
             return track;
         }
