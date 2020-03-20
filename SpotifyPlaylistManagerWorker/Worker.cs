@@ -53,7 +53,6 @@ namespace SpotifyPlaylistManagerWorker
                 catch (Exception e)
                 {
                     _logger.LogError(e, "Worker Error!!!");
-                    throw;
                 }
 
                 if (DateTime.UtcNow.Hour > 22)
