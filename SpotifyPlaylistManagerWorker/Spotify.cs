@@ -259,7 +259,7 @@ namespace SpotifyPlaylistManagerWorker
 
             var request = new HttpRequestMessage(HttpMethod.Post, "/api/token")
             {
-                Content = new StringContent($"grant_type=authorization_code&code={_configs["Code"]}&redirect_uri=http://jmperezperez.com/spotify-oauth-jsfiddle-proxy/", Encoding.UTF8, "application/x-www-form-urlencoded")
+                Content = new StringContent($"grant_type=authorization_code&code={_configs["Code"]}&redirect_uri=http://localhost/callback/", Encoding.UTF8, "application/x-www-form-urlencoded")
             };
 
             var response = await client.SendAsync(request);
